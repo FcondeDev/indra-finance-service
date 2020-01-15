@@ -10,11 +10,11 @@ public interface DutyService {
 
 	public DutyResponseDTO saveDuty(DutyDTO dutyDTO);
 
-	public List<DutyDTO> getDuties(Long clientIdentification) throws ServiceException;
+	public List<DutyDTO> getDuties(String clientIdentification) throws ServiceException;
 
-	public DutyDTO getDuty(Long dutyId);
+	public DutyDTO getDuty(String dutyId) throws ServiceException;
 
-	public DutyResponseDTO editDuty(DutyDTO dutyDTO);
+	public DutyResponseDTO editDuty(DutyDTO dutyDTO) throws ServiceException;
 
-	public DutyResponseDTO disableDuty(Long dutyId);
+	public DutyResponseDTO disableDuty(String dutyId) throws ServiceException;
 }

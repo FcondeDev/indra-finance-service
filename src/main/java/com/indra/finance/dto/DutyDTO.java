@@ -1,19 +1,29 @@
 package com.indra.finance.dto;
 
-import lombok.AllArgsConstructor;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class DutyDTO {
 
-	private Long dutyId;
+	private String dutyId;
+	@NotNull
 	private String dutyName;
-	private Long clientIdentification;
+	@NotNull
+	private String clientIdentification;
+	@NotNull
 	private String dutyDescription;
+	@NotNull
 	private Long totalValue;
+	@NotNull
 	private Long currentPeriodValue;
+	@NotNull
 	private Long numberOfPeriods;
+	@NotNull
 	private Long currentPeriod;
+	@NotNull
 	private String status;
 }

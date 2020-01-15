@@ -1,7 +1,6 @@
 package com.indra.finance.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +16,7 @@ public class Client implements Serializable {
 	private static final long serialVersionUID = 4589235900157361094L;
 
 	@Id
-	private Long identification;
+	private String identification;
 	private String documentType;
 	private String clientName;
 	private String clientMiddleName;
@@ -26,6 +25,6 @@ public class Client implements Serializable {
 	private String businessName;
 	private String address;
 	private Long phone;
-	private List<Long> clientDuties;
+	private boolean disable;
 
 }

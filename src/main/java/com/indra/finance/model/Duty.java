@@ -16,8 +16,8 @@ public class Duty implements Serializable {
 	private static final long serialVersionUID = 700192100413875989L;
 
 	@Id
-	private Long dutyId;
-	private Long clientIdentification;
+	private String dutyId;
+	private String clientIdentification;
 	private String dutyName;
 	private String dutyDescription;
 	private Long totalValue;
@@ -25,5 +25,6 @@ public class Duty implements Serializable {
 	private Long numberOfPeriods;
 	private Long currentPeriod;
 	private String status;
+	private boolean disable;
 
 }

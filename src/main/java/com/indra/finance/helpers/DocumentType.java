@@ -2,7 +2,7 @@ package com.indra.finance.helpers;
 
 public enum DocumentType {
 
-	CC("TD-001"),CE("TD-002"),PP("TD-003"),NIT("TD-004");
+	TD001("CC"), TD002("CE"), TD003("PP"), TD004("NIT");
 
 	private String code;
 
@@ -13,7 +13,5 @@ public enum DocumentType {
 	public String getCode() {
 		return code;
 	}
-	
-	
 
 }

@@ -8,5 +8,5 @@ import lombok.Data;
 public class DutyResponseDTO {
 
 	private String message;
-	private Long clientId;
+	private String name;
 }

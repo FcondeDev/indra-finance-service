@@ -2,7 +2,7 @@ package com.indra.finance.helpers;
 
 public enum DutyState {
 
-	PENDIENTE("RC-001"), PAGADO("RC-002");
+	RC001("PENDIENTE"), RC002("PAGADO");
 
 	private String code;
 
