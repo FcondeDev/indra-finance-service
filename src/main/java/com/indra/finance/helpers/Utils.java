@@ -9,4 +9,14 @@ public class Utils {
 		return code.replace("-", "");
 	}
 
+	public String dutyWasPaid(Long payment, Long totalPayment) {
+
+		if (totalPayment - payment == 0) {
+			return DutyState.valueOf("RC002").getCode();
+		} else {
+			return DutyState.valueOf("RC001").getCode();
+		}
+
+	}
+
 }

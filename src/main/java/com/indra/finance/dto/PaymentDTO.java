@@ -1,5 +1,7 @@
 package com.indra.finance.dto;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,23 +12,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DutyDTO {
+public class PaymentDTO {
 
-	private String dutyId;
-	@NotNull
-	private String dutyName;
+	private String paymentId;
 	@NotNull
 	private String clientIdentification;
 	@NotNull
-	private String dutyDescription;
+	private String dutyId;
 	@NotNull
-	private Long totalValue;
+	private String bankName;
+	private Date paymenteDate;
 	@NotNull
-	private Long currentPeriodValue;
+	private Long paymentValue;
 	@NotNull
-	private Long numberOfPeriods;
-	@NotNull
-	private Long currentPeriod;
-	@NotNull
-	private String status;
+	private Long paymentPeriod;
+
 }

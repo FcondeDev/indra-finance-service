@@ -38,13 +38,15 @@ public class DutyServiceImpl implements DutyService {
 	@Override
 	public DutyResponseDTO saveDuty(DutyDTO dutyDTO) {
 
+		String dutyName = DutyName.valueOf(utils.removeHyphen(dutyDTO.getDutyName())).getCode();
+
 		Duty duty = modelMapper.map(dutyDTO, Duty.class);
-		duty.setDutyName(DutyName.valueOf(utils.removeHyphen(dutyDTO.getDutyName())).getCode());
+		duty.setDutyName(dutyName);
 		duty.setDutyId(null);
 		duty.setStatus(DutyState.valueOf(utils.removeHyphen(dutyDTO.getStatus())).getCode());
 		duty.setDisable(false);
 		dutyRepository.save(duty);
-		return new DutyResponseDTO("The duty has been saved", dutyDTO.getDutyName());
+		return new DutyResponseDTO("The duty has been saved", dutyName);
 	}
 
 	@Override

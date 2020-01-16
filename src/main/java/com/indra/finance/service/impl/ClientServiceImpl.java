@@ -47,11 +47,8 @@ public class ClientServiceImpl implements ClientService {
 		client.setDocumentType(documentType);
 		client.setDisable(false);
 		clientRepository.save(client);
-		String clientName = (clientDTO.getClientName() != null && !clientDTO.getClientName().isEmpty())
-				? clientDTO.getClientName()
-				: clientDTO.getBusinessName();
 
-		return new ClientResponseDTO("The client was created successfuly", clientName);
+		return new ClientResponseDTO("The client was created successfully", clientDTO.getIdentification());
 	}
 
 	@Override
