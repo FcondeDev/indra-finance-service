@@ -20,7 +20,10 @@ import com.indra.finance.model.Client;
 import com.indra.finance.repository.ClientRepository;
 import com.indra.finance.service.ClientService;
 
+import lombok.extern.java.Log;
+
 @Service
+@Log
 public class ClientServiceImpl implements ClientService {
 
 	@Autowired
@@ -48,6 +51,8 @@ public class ClientServiceImpl implements ClientService {
 		client.setDisable(false);
 		clientRepository.save(client);
 
+		log.info("The client with identification :" + clientDTO.getIdentification() + " was created successfully");
+
 		return new ClientResponseDTO("The client was created successfully", clientDTO.getIdentification());
 	}
 
@@ -67,6 +72,9 @@ public class ClientServiceImpl implements ClientService {
 		isClientPresent(clientDTO.getIdentification());
 
 		clientRepository.save(modelMapper.map(clientDTO, Client.class));
+		
+		log.info("The client with identification :" + clientDTO.getIdentification() + " was edited successfully");
+		
 		return new ClientResponseDTO("The client has been edited", clientDTO.getIdentification());
 	}
 
@@ -76,6 +84,8 @@ public class ClientServiceImpl implements ClientService {
 		Client client = isClientPresent(clientIdentification);
 
 		client.setDisable(true);
+		
+		log.info("The client with id : " + clientIdentification + " was disable successfully");
 
 		clientRepository.save(client);
 

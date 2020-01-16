@@ -24,7 +24,8 @@ public class ClientController {
 	ClientService clientService;
 
 	@PostMapping("clients")
-	public ResponseEntity<ClientResponseDTO> store(@RequestBody @Validated ClientDTO clientDTO) throws ServiceException {
+	public ResponseEntity<ClientResponseDTO> store(@RequestBody @Validated ClientDTO clientDTO)
+			throws ServiceException {
 		return new ResponseEntity<>(clientService.saveClient(clientDTO), HttpStatus.OK);
 
 	}
@@ -36,7 +37,8 @@ public class ClientController {
 	}
 
 	@PutMapping("clients")
-	public ResponseEntity<ClientResponseDTO> update(@RequestBody @Validated ClientDTO clientDTO) throws ServiceException {
+	public ResponseEntity<ClientResponseDTO> update(@RequestBody @Validated ClientDTO clientDTO)
+			throws ServiceException {
 		return new ResponseEntity<>(clientService.editClient(clientDTO), HttpStatus.OK);
 
 	}

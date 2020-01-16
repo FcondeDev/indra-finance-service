@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Document(collection = "duty")
+@Document(collection = "payment")
 public class Payment implements Serializable {
 
 	private static final long serialVersionUID = 3738133540804263633L;

@@ -23,7 +23,10 @@ import com.indra.finance.model.Duty;
 import com.indra.finance.repository.DutyRepository;
 import com.indra.finance.service.DutyService;
 
+import lombok.extern.java.Log;
+
 @Service
+@Log
 public class DutyServiceImpl implements DutyService {
 
 	@Autowired
@@ -46,6 +49,8 @@ public class DutyServiceImpl implements DutyService {
 		duty.setStatus(DutyState.valueOf(utils.removeHyphen(dutyDTO.getStatus())).getCode());
 		duty.setDisable(false);
 		dutyRepository.save(duty);
+
+		log.info("The duty :" + duty.getDutyId() + "was created for the client : " + dutyDTO.getClientIdentification());
 		return new DutyResponseDTO("The duty has been saved", dutyName);
 	}
 
@@ -84,6 +89,9 @@ public class DutyServiceImpl implements DutyService {
 
 		dutyRepository.save(modelMapper.map(dutyDTO, Duty.class));
 
+		log.info("The duty with id :" + dutyDTO.getDutyId() + " was edited, which belongs to the client : "
+				+ dutyDTO.getClientIdentification());
+
 		return new DutyResponseDTO("The duty has been edited", dutyDTO.getDutyName());
 	}
 
@@ -95,6 +103,9 @@ public class DutyServiceImpl implements DutyService {
 		duty.setDisable(true);
 
 		dutyRepository.save(duty);
+
+		log.info("The duty with id :" + dutyId + " was disable, which belongs to the client : "
+				+ duty.getClientIdentification());
 
 		return new DutyResponseDTO("The duty has been disabled", duty.getDutyName());
 	}

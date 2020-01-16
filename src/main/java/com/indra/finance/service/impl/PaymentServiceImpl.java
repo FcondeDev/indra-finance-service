@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import com.indra.finance.dto.PaymentDTO;
 import com.indra.finance.dto.PaymentResponseDTO;
@@ -26,6 +27,10 @@ import com.indra.finance.repository.DutyRepository;
 import com.indra.finance.repository.PaymentRepository;
 import com.indra.finance.service.PaymentService;
 
+import lombok.extern.java.Log;
+
+@Service
+@Log
 public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
@@ -73,14 +78,18 @@ public class PaymentServiceImpl implements PaymentService {
 		payment.setBankName(BankName.valueOf(utils.removeHyphen(paymentDTO.getBankName())).getCode());
 		payment.setPaymenteDate(new Date());
 		payment.setPaymentValue(paymentDTO.getPaymentValue());
-		payment.setPaymentPeriod(duty.getCurrentPeriod());
+		payment.setPaymentPeriod(paymentDTO.getPaymentPeriod());
 
-		duty.setTotalValue(duty.getTotalValue() - paymentDTO.getPaymentValue());
-		duty.setCurrentPeriod(duty.getCurrentPeriod() + 1);
 		duty.setStatus(utils.dutyWasPaid(paymentDTO.getPaymentValue(), duty.getTotalValue()));
+		duty.setTotalValue(duty.getTotalValue() - paymentDTO.getPaymentValue());
+		duty.setCurrentPeriod(paymentDTO.getPaymentPeriod());
 
 		paymentRepository.save(payment);
 		dutyRepository.save(duty);
+
+		log.info("Date :" + payment.getPaymenteDate() + " -- The client : " + client.get().getIdentification()
+				+ " has made a payment to the duty with the id: " + duty.getDutyId() + " with value of : "
+				+ paymentDTO.getPaymentValue() + " in the period number : " + paymentDTO.getPaymentPeriod());
 
 		return new PaymentResponseDTO("The payment was registered successfully", payment.getPaymentId());
 	}

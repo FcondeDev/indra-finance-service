@@ -10,6 +10,6 @@ public interface PaymentService {
 
 	public PaymentResponseDTO makePayment(PaymentDTO paymentDTO) throws ServiceException;
 
-	public List<PaymentDTO> getPayments(String dutyId) throws ServiceException;	
+	public List<PaymentDTO> getPayments(String dutyId) throws ServiceException;
 
 }
