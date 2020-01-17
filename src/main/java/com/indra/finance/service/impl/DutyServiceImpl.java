@@ -50,7 +50,7 @@ public class DutyServiceImpl implements DutyService {
 		duty.setDisable(false);
 		dutyRepository.save(duty);
 
-		log.info("The duty :" + duty.getDutyId() + "was created for the client : " + dutyDTO.getClientIdentification());
+		log.info("The duty :" + duty.getDutyId() + " was created for the client : " + dutyDTO.getClientIdentification());
 		return new DutyResponseDTO("The duty has been saved", dutyName);
 	}
 
