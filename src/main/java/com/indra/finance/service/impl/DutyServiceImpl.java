@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,15 @@ public class DutyServiceImpl implements DutyService {
 	@Autowired
 	Utils utils;
 
+	@Value("${duty.post}")
+	private String saveMessage;
+
+	@Value("${duty.put}")
+	private String editMessage;
+
+	@Value("${duty.disable}")
+	private String deleteMessage;
+
 	@Override
 	public DutyResponseDTO saveDuty(DutyDTO dutyDTO) {
 
@@ -50,8 +60,9 @@ public class DutyServiceImpl implements DutyService {
 		duty.setDisable(false);
 		dutyRepository.save(duty);
 
-		log.info("The duty :" + duty.getDutyId() + " was created for the client : " + dutyDTO.getClientIdentification());
-		return new DutyResponseDTO("The duty has been saved", dutyName);
+		log.info(
+				"The duty :" + duty.getDutyId() + " was created for the client : " + dutyDTO.getClientIdentification());
+		return new DutyResponseDTO(saveMessage, dutyName);
 	}
 
 	@Override
@@ -92,7 +103,7 @@ public class DutyServiceImpl implements DutyService {
 		log.info("The duty with id :" + dutyDTO.getDutyId() + " was edited, which belongs to the client : "
 				+ dutyDTO.getClientIdentification());
 
-		return new DutyResponseDTO("The duty has been edited", dutyDTO.getDutyName());
+		return new DutyResponseDTO(editMessage, dutyDTO.getDutyName());
 	}
 
 	@Override
@@ -107,7 +118,7 @@ public class DutyServiceImpl implements DutyService {
 		log.info("The duty with id :" + dutyId + " was disable, which belongs to the client : "
 				+ duty.getClientIdentification());
 
-		return new DutyResponseDTO("The duty has been disabled", duty.getDutyName());
+		return new DutyResponseDTO(deleteMessage, duty.getDutyName());
 	}
 
 	private Duty isDutyPresent(String dutyId) throws ServiceException {

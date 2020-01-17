@@ -2,7 +2,9 @@ package com.indra.finance.service.impl;
 
 import static com.indra.finance.error.Error.THERE_ARENT_PAYMENTS_FOR_THIS_DUTY;
 import static com.indra.finance.error.Error.THE_CLIENT_DOESNT_EXIST;
-import static com.indra.finance.error.Error.*;
+import static com.indra.finance.error.Error.THE_DUTY_DOESNT_EXIST;
+import static com.indra.finance.error.Error.THE_DUTY_HAS_ALREADY_BEEN_PAID;
+import static com.indra.finance.error.Error.THE_PAYMENT_EXCEED_THE_VALUE;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +51,9 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Value("${payment.post}")
+	private String saveMessage;
+
 	@Override
 	public PaymentResponseDTO makePayment(PaymentDTO paymentDTO) throws ServiceException {
 
@@ -66,7 +72,8 @@ public class PaymentServiceImpl implements PaymentService {
 		if (!client.isPresent())
 			throw new ServiceException(HttpStatus.NOT_FOUND.value(), THE_CLIENT_DOESNT_EXIST);
 
-		if (paymentDTO.getPaymentValue() > duty.getCurrentPeriodValue())
+		if (paymentDTO.getPaymentValue() > duty.getCurrentPeriodValue()
+				|| paymentDTO.getPaymentValue() > duty.getTotalValue())
 			throw new ServiceException(HttpStatus.NOT_FOUND.value(), THE_PAYMENT_EXCEED_THE_VALUE);
 
 		Payment payment = new Payment();
@@ -91,7 +98,7 @@ public class PaymentServiceImpl implements PaymentService {
 				+ " has made a payment to the duty with the id: " + duty.getDutyId() + " with value of : "
 				+ paymentDTO.getPaymentValue() + " in the period number : " + paymentDTO.getPaymentPeriod());
 
-		return new PaymentResponseDTO("The payment was registered successfully", payment.getPaymentId());
+		return new PaymentResponseDTO(saveMessage, payment.getPaymentId());
 	}
 
 	@Override

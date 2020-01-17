@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,15 @@ public class ClientServiceImpl implements ClientService {
 	@Autowired
 	Utils utils;
 
+	@Value("${client.post}")
+	private String saveMessage;
+
+	@Value("${client.put}")
+	private String editMessage;
+
+	@Value("${client.delete}")
+	private String deleteMessage;
+
 	@Override
 	public ClientResponseDTO saveClient(ClientDTO clientDTO) throws ServiceException {
 
@@ -53,7 +63,7 @@ public class ClientServiceImpl implements ClientService {
 
 		log.info("The client with identification :" + clientDTO.getIdentification() + " was created successfully");
 
-		return new ClientResponseDTO("The client was created successfully", clientDTO.getIdentification());
+		return new ClientResponseDTO(saveMessage, clientDTO.getIdentification());
 	}
 
 	@Override
@@ -72,10 +82,10 @@ public class ClientServiceImpl implements ClientService {
 		isClientPresent(clientDTO.getIdentification());
 
 		clientRepository.save(modelMapper.map(clientDTO, Client.class));
-		
+
 		log.info("The client with identification :" + clientDTO.getIdentification() + " was edited successfully");
-		
-		return new ClientResponseDTO("The client has been edited", clientDTO.getIdentification());
+
+		return new ClientResponseDTO(editMessage, clientDTO.getIdentification());
 	}
 
 	@Override
@@ -84,12 +94,12 @@ public class ClientServiceImpl implements ClientService {
 		Client client = isClientPresent(clientIdentification);
 
 		client.setDisable(true);
-		
+
 		log.info("The client with id : " + clientIdentification + " was disable successfully");
 
 		clientRepository.save(client);
 
-		return new ClientResponseDTO("The client has been disabled", client.getIdentification());
+		return new ClientResponseDTO(deleteMessage, client.getIdentification());
 	}
 
 	private Client isClientPresent(String clientIdentification) throws ServiceException {
